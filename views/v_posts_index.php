@@ -1,6 +1,6 @@
 <?php foreach($posts as $post): ?>
 
-<article>
+<article class='postsIndex'>
 
 	<h1><?=$post['first_name']?> <?=$post['last_name']?> posted:</h1>
 

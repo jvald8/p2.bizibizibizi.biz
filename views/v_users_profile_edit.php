@@ -1,6 +1,6 @@
-<form method='POST' action='/users/p_signup'>
+<form method='POST' action='/users/p_profile_edit'>
 
-    <div id='signupForm'>
+    <div id='profileEditForm'>
         First Name<br>
         <input type='text' name='first_name'>
         <br><br>
@@ -13,11 +13,8 @@
         <input type='text' name='email'>
         <br><br>
 
-        Password<br>
-        <input type='password' name='password'>
-        <br><br>
 
-        <input type='submit' value='Sign Up'>
+        <input type='submit' value='Edit'>
     </div>
 
 </form>

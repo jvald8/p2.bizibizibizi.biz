@@ -1,0 +1,80 @@
+body {
+	color:#A64B00;
+	font-family: 'Raleway', sans-serif;
+	
+}
+#menu {
+	background-color:brown;
+	border-radius: 10px;
+	float:right;
+}
+#menu a:hover {
+	color:black;
+}
+#menu a {
+	color:white;
+	text-decoration:none;
+	font-size: 30px;
+}
+#intro {
+	text-align:center;
+}
+#intro a {
+	color:#FF7400;
+	text-decoration:none;
+}
+#intro a:hover {
+	color:#000000;
+}
+#loginForm {
+	padding:10px;
+	text-align:center;
+	border-top:500px;
+}
+
+#loginPassword {
+	padding:10px;
+	text-align:center;
+}
+#loginEmail {
+	padding:10px;
+	text-align:center;
+}
+#loginSubmitButton {
+	text-align:center;
+}
+#signupForm {
+	text-align:center;
+	padding-top:100px;
+}
+#profileEditForm {
+	text-align:center;
+	padding-top:100px;
+}
+.postsAdd {
+	text-align:center;
+	padding-top:100px;
+	font-size:30px;
+}
+.error {
+	text-align:center;
+	color:red;
+}
+.postsIndex {
+	text-align:center;
+	padding-top:100px;
+}
+
+.postsUsers {
+	text-align:center;
+	padding-top:100px;
+	font-size:30px;
+}
+.postsUsers a {
+	color:#FF7400;
+	text-decoration:none;
+	font-size: 30px;
+}
+.postsUsers a:hover {
+	color:black;
+}

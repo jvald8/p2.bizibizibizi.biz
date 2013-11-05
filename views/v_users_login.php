@@ -1,14 +1,19 @@
 <form method='POST' action='/users/p_login'>
 
-	Email<br>
-	<input type='text' name='email'>
+	<div id='loginForm'>	
+		<div id='loginEmail'>
+			Email<br>
+			<input type='text' name='email'>
+		</div>
 
-	<br><br>
+			<br>
+		<div id='loginPassword'>
+			Password<br>
+			<input type='password' name='password'>
+		</div>
+	</div>
 
-	Password<br>
-	<input type='password' name='password'>
-
-	<br><br>
+	<br>
 
 	<?php if(isset($error)): ?>
 		<div class='error'>
@@ -16,7 +21,8 @@
 		</div>
 		<br>
 	<?php endif; ?>
-
-	<input type='submit' value='Log in'>
+	<div id='loginSubmitButton'>
+		<input type='submit' value='Log in'>
+	</div>
 
 </form>

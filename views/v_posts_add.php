@@ -1,10 +1,12 @@
 <form method="POST" action='/posts/p_add'>
 
-	<label for='content'>New Post:</label><br>
-	<textarea name='content' id='content'></textarea>
+	<div class='postsAdd'>
+		<label for='content'>I mustache a question: </label><br>
+		<textarea name='content' id='content'></textarea>
 
 
-	<br><br>
-	<input type='submit' value='New post'>
+		<br><br>
+		<input type='submit' value='New post'>
+	</div>
 
 </form>

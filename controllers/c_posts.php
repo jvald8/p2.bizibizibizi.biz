@@ -66,7 +66,7 @@ class posts_controller extends base_controller {
 
 		# Render the View
 		echo $this->template;
-		
+
 
 	}
 
@@ -124,7 +124,9 @@ class posts_controller extends base_controller {
 	public function unfollow($user_id_followed) {
 
 		# Delete this connection
-		$where_condition = 'WHERE user_id = '.$this->user->user_id.' AND user_id_followed = '.user_id_followed;
+		$where_condition = 'WHERE user_id = '.$this->user->user_id.' AND user_id_followed = '.$user_id_followed;
+
+		#Run the delete
 		DB::instance(DB_NAME)->delete('users_users', $where_condition);
 
 		# Send them back

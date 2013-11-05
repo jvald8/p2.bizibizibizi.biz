@@ -20,26 +20,55 @@ class users_controller extends base_controller {
     }
 
     public function p_signup() {
+    
+            # Sanitize Data Entry
+            $_POST = DB::instance(DB_NAME)->sanitize($_POST);
+    
+            # Set up Email / Password Query
+            $q = "SELECT * FROM users WHERE email = '".$_POST['email']."'"; 
+            
+            # Query Database
+            $user_exists = DB::instance(DB_NAME)->select_rows($q);
+            
+            # Check if email exists in database
+            if(!empty($user_exists)){
+                            
+            # Send to Login page
+                    
+                    Router::redirect('/users/login');
 
-        # More data we want stored with the user
-        $_POST['created']  = Time::now();
-        $_POST['modified'] = Time::now();
-
-        $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
-
-        $_POST['token']    = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
-
-        # Dump out the results of POST to see what the form submitted
-        //echo '<pre>';
-        //print_r($_POST);
-        //echo '</pre>';
-        # Insert user into DB
-        $user_id = DB::instance(DB_NAME)->insert('users', $_POST);
-
-        # For now, just confirm they've signed up -
-        # You should eventually make a proper View for this
-        echo 'You\'re signed up';
-
+                }
+                            
+                else {
+                                    
+                    # Mail Setup
+                        $to = $_POST['email'];
+                        $subject = "Welcome to Jon's App!";
+                        $message = "Thanks for signing up with Jon's App";
+                        $from = 'jvald8@gmail.com';
+                        $headers = "From:" . $from;         
+                                    
+                    # More data we want stored with the user
+                        $_POST['created'] = Time::now();
+                        $_POST['modified'] = Time::now();
+                    
+                        # Encrypt password
+                        $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
+                    
+                        # Create encrypted token via email and random string
+                        $_POST['token'] = sha1(TOKEN_SALT.$_POST['email'].Utils::generate_random_string());
+                    
+                        # Insert this user into the database
+                        $user_id = DB::instance(DB_NAME)->insert('users', $_POST);
+                    
+                        # Send Email
+        if(!$this->user) {
+                    mail($to, $subject, $message, $headers);
+        }         
+                    
+                        # Send to the login page
+                        Router::redirect('/users/login');
+            }
     }//</cm>
 
 
@@ -62,7 +91,7 @@ class users_controller extends base_controller {
         # Sanitize the user entered data to prevent funny business
         $_POST = DB::instance(DB_NAME)->sanitize($_POST);
 
-        # Hash ubmitted password so we can compare it against one in the db
+        # Hash submitted password so we can compare it against one in the db
         $_POST['password'] = sha1(PASSWORD_SALT.$_POST['password']);
 
         # Search the db fpr this email and password
@@ -130,8 +159,39 @@ class users_controller extends base_controller {
             die('Members only. <a href="/users/login">Login</a>');
         }
         else {
-            echo "This is the profile for ".$user_name;
+            echo "This is the profile for ".$this->user->first_name;
+            
+            echo '<a href="/users/profile_edit"> Edit Profile</a>';
         }
+    }
+
+    public function profile_edit() {
+        // Set up the view
+        $this->template->content = View::instance('v_users_profile_edit');
+        $this->template->title   = "Edit Profile";
+
+        // Render the view
+        echo $this->template;
+
+    }
+
+
+    public function p_profile_edit() {
+
+
+        $q = "UPDATE    users
+            SET         first_name = '".$_REQUEST['first_name']."',
+                        last_name = '".$_REQUEST['last_name']."',
+                        email = '".$_REQUEST['email']."'
+            WHERE       email = '".$this->user->email."'";
+
+        DB::instance(DB_NAME)->query($q);
+        Router::redirect("/users/profile");
+
+        // Send them back to the login page with a success message
+        #Router::redirect("/users/profile"); 
+
+        
     }
 
 } # end of the class
